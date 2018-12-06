@@ -59,12 +59,41 @@ public class HuffProcessor {
 	 *            Buffered bit stream writing to the output file.
 	 */
 	public void decompress(BitInputStream in, BitOutputStream out){
-
+		if(in.readBits(BITS_PER_INT) != HUFF_NUMBER)
+			throw new HuffException("HUFF_NUMBER isn't there");
+		HuffNode start = parseTree(in);
+		HuffNode now = start;
 		while (true){
-			int val = in.readBits(BITS_PER_WORD);
-			if (val == -1) break;
-			out.writeBits(BITS_PER_WORD, val);
+			int bits = in.readBits(1);
+			if(bits == -1)
+				throw new HuffException("bad input, no PSEUDO_EOF");
+			else {
+			if(bits == 0)
+				now = now.myLeft;
+			else 
+				now = now.myRight;
+			if(now.myLeft == null && now.myRight == null){
+				if(now.myValue == PSEUDO_EOF)
+					return;
+				else { 
+					out.writeBits(BITS_PER_WORD, now.myValue);
+				    now = start;
+				    }
+				
+			}
 		}
-		out.close();
+		}
+		//out.close();
+	}
+	private HuffNode parseTree(BitInputStream in){
+		if(in.readBits(1) == 0){
+			HuffNode r = parseTree(in);
+			HuffNode l = parseTree(in);
+			//return new HuffNode(-1, 0, l, r);
+			return new HuffNode(0, 0, l, r);
+		} else {
+			int value = BITS_PER_WORD+1;
+			return new HuffNode(in.readBits(value), 0);
+		}
 	}
 }
