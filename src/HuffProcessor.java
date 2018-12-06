@@ -67,7 +67,7 @@ public class HuffProcessor {
 			int bits = in.readBits(1);
 			if(bits == -1)
 				throw new HuffException("bad input, no PSEUDO_EOF");
-			//else {
+			else {
 			if(bits == 0)
 				now = now.myLeft;
 			else 
@@ -82,7 +82,7 @@ public class HuffProcessor {
 				
 			}
 		}
-		//}
+		}
 		
 		//out.close();
 	}
