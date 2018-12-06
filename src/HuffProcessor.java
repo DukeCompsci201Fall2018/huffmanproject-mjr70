@@ -67,10 +67,10 @@ public class HuffProcessor {
 			int bits = in.readBits(1);
 			if(bits == -1)
 				throw new HuffException("bad input, no PSEUDO_EOF");
-			else {
-			if(bits == 1)//==0
+			//else {
+			if(bits == 0)
 				now = now.myLeft;
-			else {
+			else 
 				now = now.myRight;
 			if(now.myLeft == null && now.myRight == null){
 				if(now.myValue == PSEUDO_EOF)
@@ -82,8 +82,8 @@ public class HuffProcessor {
 				
 			}
 		}
-		}
-		}
+		//}
+		
 		//out.close();
 	}
 	private HuffNode parseTree(BitInputStream in){
