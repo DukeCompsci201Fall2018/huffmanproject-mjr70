@@ -159,7 +159,7 @@ public class HuffProcessor {
 		if(fBit == 0){
 			return new HuffNode(0,0, readTreeHeader(in),readTreeHeader(in));	
 		}
-		return new HuffNode(in.readBits(9), 0, null, null);
+		return new HuffNode(in.readBits(BITS_PER_WORD + 1), 0, null, null);
 	}
 }
 
