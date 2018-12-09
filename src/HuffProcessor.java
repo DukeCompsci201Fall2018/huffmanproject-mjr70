@@ -170,7 +170,7 @@ public class HuffProcessor {
 			return new HuffNode(0, 0, l, r);
 		} else {
 			int value = BITS_PER_WORD+1;
-			return new HuffNode(in.readBits(value), 0);
+			return new HuffNode(in.readBits(value), 0,null,null);
 		}
 	}
 }
