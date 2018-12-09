@@ -135,7 +135,7 @@ public class HuffProcessor {
 	    	}
 		HuffNode start = readTreeHeader(in);
 		readCompressedBits(start, in, out);
-  
+		out.close();
 	}
 	
 	private void readCompressedBits(HuffNode root, BitInputStream in, BitOutputStream out) {
